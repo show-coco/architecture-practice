@@ -5,10 +5,22 @@ class Employee {
 
   private address: string;
 
-  constructor(empID: number, name: string, address: string) {
+  private hourlyRate?: number;
+
+  private salaried?: number;
+
+  private comissionRate?: number;
+
+  constructor(
+    empID: number, name: string, address: string,
+    hourlyRate?: number, salaried?: number, comissionRate?: number,
+  ) {
     this.empID = empID;
     this.name = name;
     this.address = address;
+    this.hourlyRate = hourlyRate;
+    this.salaried = salaried;
+    this.comissionRate = comissionRate;
   }
 
   getID() {
