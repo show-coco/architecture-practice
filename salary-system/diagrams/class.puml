@@ -1,0 +1,25 @@
+@startuml
+
+package usecase {
+  class addEmployee {
+    --
+    execute(empID: number, name: string, address: string): void;
+  }
+}
+
+package entity {
+  class Employee {
+    empID: number
+    name: string
+    address: string
+  }
+}
+
+package repository {
+  class EmploeeRepo {
+    --
+    saveEmployee(employee: Employee): void;
+    getEmployee(): Employee
+  }
+}
+@enduml

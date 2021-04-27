@@ -1,4 +1,7 @@
 {
+  "eslint.workingDirectories": [
+    "./salary-system",
+  ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }
