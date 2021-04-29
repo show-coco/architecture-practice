@@ -1,25 +1,79 @@
 @startuml
 
-package usecase {
-  class addEmployee {
+package transaction {
+  interface Transaction {
     --
-    execute(empID: number, name: string, address: string): void;
+    execute(): void
+  }
+
+  class AddEmployeeTransaction {
+    --
+    execute(): void;
+  }
+
+  class AddHourlyEmployee {
+    - hourlyRate 
+  }
+
+  class AddSalariedEmployee {
+    - salary
+  }
+
+  class AddComissionedEmployee {
+    - salary
+    - comissionRate
   }
 }
+
 
 package entity {
   class Employee {
-    empID: number
-    name: string
-    address: string
+    - empID
+    - name
+    - address
+    - classification: Classification
+    --
+    + setClassification()
   }
 }
 
-package repository {
-  class EmploeeRepo {
-    --
-    saveEmployee(employee: Employee): void;
-    getEmployee(): Employee
+package value-object {
+  interface PaymentClassification
+
+  class HourlyClassification {
+    - hourlyRate
+  }
+
+  class SalariedClassification {
+    - salary
+  }
+
+  class ComissionedClassification {
+    - salary
+    - comissionRate
   }
 }
+
+package database {
+  class PayrollDatabase {
+    --
+    + addEmployee(empID: number, employee: Employee): void;
+    + getEmployee(empID: number): Employee
+  }
+}
+
+Transaction <|-- AddEmployeeTransaction
+AddEmployeeTransaction <|-- AddHourlyEmployee
+AddEmployeeTransaction <|-- AddSalariedEmployee
+AddEmployeeTransaction <|-- AddComissionedEmployee
+
+PaymentClassification <|-- HourlyClassification
+PaymentClassification <|-- SalariedClassification
+PaymentClassification <|-- ComissionedClassification
+
+Employee *-- PaymentClassification
+
+AddEmployeeTransaction --> Employee
+AddEmployeeTransaction --> PayrollDatabase
+
 @enduml

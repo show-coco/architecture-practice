@@ -1,9 +1,9 @@
-import Employee from '../eneity/Employee';
+import Employee from '../eneity/employee/Employee';
 
 class EmployeeRepo {
-  employees: Employee[] = [];
+  private static employees: Employee[] = [];
 
-  getEmployee(empID: number): Employee {
+  static getEmployee(empID: number): Employee {
     const emp = this.employees.find((e) => e.getID() === empID);
     if (!emp) {
       throw new Error(`Employee which empID is ${empID}  is not found`);
@@ -12,7 +12,7 @@ class EmployeeRepo {
     return emp;
   }
 
-  saveEmployee(employee: Employee) {
+  static saveEmployee(employee: Employee) {
     this.employees.push(employee);
   }
 }

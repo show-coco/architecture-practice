@@ -1,40 +1,32 @@
-import Employee from '../../eneity/Employee';
+import Employee from '../../eneity/employee/Employee';
 import EmployeeRepo from '../../repository/EmployeeRepo';
+import PaymentClassification from '../../valueObject/paymentClassification/PaymentClassification';
+import ITransaction from '../ITransaction';
 
-type EmployeeType = 'Hourly' | 'Salary' | 'Comission';
+// Template Method Pettern
+abstract class AddEmployeeTransaction implements ITransaction {
+  private empID: number;
 
-class AddEmployee {
-  private employeeRepo: EmployeeRepo;
+  private name: string;
 
-  constructor(employeeRepo: EmployeeRepo) {
-    this.employeeRepo = employeeRepo;
+  private address: string;
+
+  constructor(empID: number, name: string, address: string) {
+    this.empID = empID;
+    this.name = name;
+    this.address = address;
   }
 
-  execute(
-    empID: number, name: string, address: string, type: EmployeeType,
-    hourlyRate?: number, salary?: number, comissionRate?: number,
-  ): void {
-    let emp: Employee;
+  execute(): void {
+    const classification = this.getClassification();
 
-    if (type === 'Hourly') {
-      if (!hourlyRate) {
-        throw new Error('Please enter hourlyRate for Hourly type');
-      }
-      emp = new Employee(empID, name, address, hourlyRate, undefined, undefined);
-    } else if (type === 'Salary') {
-      if (!salary) {
-        throw new Error('Please enter salary for Salary type');
-      }
-      emp = new Employee(empID, name, address, undefined, salary, undefined);
-    } else {
-      if (!salary || !comissionRate) {
-        throw new Error('Please enter salary and comissionRate for Comission type');
-      }
-      emp = new Employee(empID, name, address, undefined, salary, comissionRate);
-    }
+    const emp = new Employee(this.empID, this.name, this.address);
+    emp.setClassification(classification);
 
-    this.employeeRepo.saveEmployee(emp);
+    EmployeeRepo.saveEmployee(emp);
   }
+
+  abstract getClassification(): PaymentClassification;
 }
 
-export default AddEmployee;
+export default AddEmployeeTransaction;
