@@ -3,17 +3,18 @@ import Employee from '../eneity/employee/Employee';
 class EmployeeRepo {
   private static employees: Employee[] = [];
 
-  static getEmployee(empID: number): Employee {
+  static getEmployee(empID: number): Employee | undefined {
     const emp = this.employees.find((e) => e.getID() === empID);
-    if (!emp) {
-      throw new Error(`Employee which empID is ${empID}  is not found`);
-    }
 
     return emp;
   }
 
   static saveEmployee(employee: Employee) {
     this.employees.push(employee);
+  }
+
+  static deleteEmployee(empID: number) {
+    this.employees = this.employees.filter((emp) => emp.getID() !== empID);
   }
 
   static clear() {

@@ -23,6 +23,11 @@ package transaction {
     - salary
     - comissionRate
   }
+  
+  class DeleteEmployeeTransaction {
+    --
+    execute(): void;
+  }
 }
 
 
@@ -63,6 +68,7 @@ package database {
 }
 
 Transaction <|-- AddEmployeeTransaction
+Transaction <|-- DeleteEmployeeTransaction
 AddEmployeeTransaction <|-- AddHourlyEmployee
 AddEmployeeTransaction <|-- AddSalariedEmployee
 AddEmployeeTransaction <|-- AddComissionedEmployee
@@ -75,5 +81,6 @@ Employee *-- PaymentClassification
 
 AddEmployeeTransaction --> Employee
 AddEmployeeTransaction --> PayrollDatabase
+DeleteEmployeeTransaction --> PayrollDatabase
 
 @enduml
