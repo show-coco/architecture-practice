@@ -15,6 +15,10 @@ class EmployeeRepo {
   static saveEmployee(employee: Employee) {
     this.employees.push(employee);
   }
+
+  static clear() {
+    this.employees = [];
+  }
 }
 
 export default EmployeeRepo;
