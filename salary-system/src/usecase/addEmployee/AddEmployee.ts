@@ -3,7 +3,8 @@ import EmployeeRepo from '../../repository/EmployeeRepo';
 import PaymentClassification from '../../valueObject/paymentClassification/PaymentClassification';
 import ITransaction from '../ITransaction';
 
-// Template Method Pettern
+// Template Method Pattern
+// Command Pattern
 abstract class AddEmployeeTransaction implements ITransaction {
   private empID: number;
 
