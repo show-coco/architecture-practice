@@ -1,6 +1,8 @@
 import EmployeeRepo from '../../repository/EmployeeRepo';
+import ComissionedClassification from '../../valueObject/paymentClassification/ComissionedClassification';
 import HourlyClassification from '../../valueObject/paymentClassification/HourlyClassification';
 import SalariedClassification from '../../valueObject/paymentClassification/SalariedClassification';
+import AddComissionedEmployee from './AddComissionedEmployee';
 import AddHourlyEmployee from './AddHourlyEmployee';
 import AddSalariedEmployee from './AddSalariedEmployee';
 
@@ -39,6 +41,27 @@ describe('addEmployee', () => {
 
       expect(sc).toBeTruthy();
       expect(sc.getSalary()).toBe(320000);
+    });
+
+    EmployeeRepo.clear();
+  });
+
+  describe('When adding comissioned employee', () => {
+    const addEmployee = new AddComissionedEmployee(1, 'Ropital', 'Hiroshima', 320000, 30000);
+    addEmployee.execute();
+    const emp = EmployeeRepo.getEmployee(1);
+
+    it('Employee is stored', () => {
+      expect(emp.getName()).toBe('Ropital');
+    });
+
+    it('Classification is ComissionedClassification', () => {
+      const pc = emp.getClassification();
+      const cc = pc as ComissionedClassification;
+
+      expect(cc).toBeTruthy();
+      expect(cc.getSalary()).toBe(320000);
+      expect(cc.getComissionRate()).toBe(30000);
     });
 
     EmployeeRepo.clear();
