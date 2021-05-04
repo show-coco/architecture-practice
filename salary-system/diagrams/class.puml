@@ -28,6 +28,12 @@ package transaction {
     --
     execute(): void;
   }
+
+  class TimeCardTransaction {
+    date
+    hours
+    empID
+  }
 }
 
 
@@ -40,6 +46,11 @@ package entity {
     --
     + setClassification()
   }
+
+  class TimeCard {
+    date
+    hours
+  }
 }
 
 package value-object {
@@ -47,6 +58,7 @@ package value-object {
 
   class HourlyClassification {
     - hourlyRate
+    - timeCard
   }
 
   class SalariedClassification {
@@ -69,6 +81,8 @@ package database {
 
 Transaction <|-- AddEmployeeTransaction
 Transaction <|-- DeleteEmployeeTransaction
+Transaction <|-- TimeCardTransaction
+
 AddEmployeeTransaction <|-- AddHourlyEmployee
 AddEmployeeTransaction <|-- AddSalariedEmployee
 AddEmployeeTransaction <|-- AddComissionedEmployee
@@ -82,5 +96,9 @@ Employee *-- PaymentClassification
 AddEmployeeTransaction --> Employee
 AddEmployeeTransaction --> PayrollDatabase
 DeleteEmployeeTransaction --> PayrollDatabase
+TimeCardTransaction --> Employee
+TimeCardTransaction --> TimeCard
+TimeCardTransaction --> HourlyClassification
+TimeCardTransaction --> PayrollDatabase
 
 @enduml
